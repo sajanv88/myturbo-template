@@ -32,7 +32,7 @@ RUN pnpm install
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-
+EXPOSE 3001
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
 # ENV TURBO_TEAM=$TURBO_TEAM
@@ -51,4 +51,4 @@ RUN adduser --system --uid 1001 nestjs
 USER nestjs
 COPY --from=installer /app .
 
-CMD node apps/api/dist/index.js
+CMD node apps/api/dist/main

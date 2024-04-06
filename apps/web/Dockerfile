@@ -15,6 +15,7 @@ WORKDIR /app
 RUN pnpm install turbo --global
 COPY . .
 RUN turbo prune web --docker
+EXPOSE 3000
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
@@ -26,6 +27,8 @@ WORKDIR /app
 COPY .gitignore .gitignore
 COPY --from=builder /app/out/json/ .
 COPY --from=builder /app/out/pnpm-lock.yaml ./pnpm-lock.yaml
+COPY --from=builder /app/out/pnpm-workspace.yaml ./pnpm-workspace.yaml
+
 RUN pnpm install
 
 # Build the project
