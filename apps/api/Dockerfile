@@ -1,6 +1,7 @@
 FROM node:18-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+EXPOSE 8001
 RUN corepack enable
 
 # The web Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
@@ -32,7 +33,6 @@ RUN pnpm install
 # Build the project and its dependencies
 COPY --from=builder /app/out/full/ .
 COPY turbo.json turbo.json
-EXPOSE 3001
 # Uncomment and use build args to enable remote caching
 # ARG TURBO_TEAM
 # ENV TURBO_TEAM=$TURBO_TEAM

@@ -1,6 +1,7 @@
 FROM node:18-alpine AS base
 ENV PNPM_HOME="/pnpm"
 ENV PATH="$PNPM_HOME:$PATH"
+EXPOSE 3000
 RUN corepack enable
 
 # This Dockerfile is copy-pasted into our main docs at /docs/handbook/deploying-with-docker.
@@ -15,7 +16,6 @@ WORKDIR /app
 RUN pnpm install turbo --global
 COPY . .
 RUN turbo prune web --docker
-EXPOSE 3000
 
 # Add lockfile and package.json's of isolated subworkspace
 FROM base AS installer
